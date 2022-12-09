@@ -1,0 +1,16 @@
+import { configureStore } from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux'
+
+import gameDetailsReducer from './getGameDetails.tsx/GameDetailsSlice'
+import gamesReducer from './getGames/GamesSlice'
+
+export const store = configureStore({
+  reducer: {
+    games: gamesReducer,
+    gameDetails: gameDetailsReducer,
+  },
+})
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()
