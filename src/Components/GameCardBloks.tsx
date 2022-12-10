@@ -1,6 +1,8 @@
-import { LayoutGroup, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { FC } from 'react'
 import styled from 'styled-components'
 
+import { fadeIn } from '../animation'
 import { IGame } from '../types'
 import { Game } from './Game'
 
@@ -9,21 +11,19 @@ interface IProps {
   blockName: string
 }
 
-export const GameCardBlocks = ({ games, blockName }: IProps) => {
+export const GameCardBlocks: FC<IProps> = ({ games, blockName }) => {
   return (
     <motion.div>
       <h2>{blockName}</h2>
-      <Games>
+      <Games variants={fadeIn} initial="hidden" animate="show">
         {games.map((game: IGame) => (
-          <LayoutGroup>
-            <Game
-              name={game.name}
-              key={game.id}
-              released={game.released}
-              img={game.background_image}
-              id={game.id}
-            />
-          </LayoutGroup>
+          <Game
+            name={game.name}
+            key={game.id}
+            released={game.released}
+            img={game.background_image}
+            id={game.id}
+          />
         ))}
       </Games>
     </motion.div>

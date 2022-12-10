@@ -2,7 +2,8 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { getGameDetailsRequest } from '../Store/getGameDetails.tsx/GameDetailsRequest'
+import { cardGame } from '../animation'
+import { getGameDetailsRequest } from '../Store/getGameDetails/GameDetailsRequest'
 import { useAppDispatch } from '../Store/store'
 
 interface IProps {
@@ -22,7 +23,13 @@ export const Game = ({ name, released, img, id }: IProps) => {
   }
 
   return (
-    <StyledGame onClick={loadDetailsHandler} layoutId={id}>
+    <StyledGame
+      onClick={loadDetailsHandler}
+      layoutId={id}
+      variants={cardGame}
+      initial="hidden"
+      animate="show"
+    >
       <Link to={`details-game/${id}`}>
         <motion.h3 layoutId={`title ${id}`}>{name}</motion.h3>
         <p>{released}</p>

@@ -7,6 +7,7 @@ const initialState: IGamesData = {
   popular: [],
   newGames: [],
   upcoming: [],
+  isLoad: true,
 }
 
 const gamesSlice = createSlice({
@@ -14,13 +15,18 @@ const gamesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // builder.addCase(getGamesRequest.pending, (state) => {})
+    builder.addCase(getGamesRequest.pending, (state) => {
+      state.isLoad = true
+    })
     builder.addCase(getGamesRequest.fulfilled, (state, { payload }) => {
       state.popular = payload.popular.results
       state.newGames = payload.newGames.results
       state.upcoming = payload.upcoming.results
+      state.isLoad = false
     })
-    // builder.addCase(getGamesRequest.rejected, (state) => {})
+    builder.addCase(getGamesRequest.rejected, (state) => {
+      state.isLoad = true
+    })
   },
 })
 

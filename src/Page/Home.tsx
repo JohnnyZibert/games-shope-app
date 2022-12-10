@@ -12,9 +12,10 @@ import { GameDetails } from './GameDetails'
 export const Home = () => {
   const dispatch: AppDispatch = useDispatch()
   const location = useLocation()
-  const upcomingGame = useSelector((state: RootState) => state.games.upcoming)
-  const newGame = useSelector((state: RootState) => state.games.newGames)
-  const popularGame = useSelector((state: RootState) => state.games.popular)
+  const { upcoming, popular, newGames } = useSelector(
+    (state: RootState) => state.games
+  )
+  const { searchGames } = useSelector((state: RootState) => state.searchGame)
 
   const pathId = location.pathname.split('/')[2]
 
@@ -31,10 +32,12 @@ export const Home = () => {
         <AnimatePresence>
           {pathId && <GameDetails pathId={pathId} />}
         </AnimatePresence>
-
-        <GameCardBlocks games={upcomingGame} blockName={'Upcoming Game'} />
-        <GameCardBlocks games={popularGame} blockName={'Popular Games'} />
-        <GameCardBlocks games={newGame} blockName={'New Games'} />
+        {searchGames.length > 0 && (
+          <GameCardBlocks games={searchGames} blockName={'Searched Game'} />
+        )}
+        <GameCardBlocks games={upcoming} blockName={'Upcoming Game'} />
+        <GameCardBlocks games={popular} blockName={'Popular Games'} />
+        <GameCardBlocks games={newGames} blockName={'New Games'} />
       </AnimateSharedLayout>
     </GamesList>
   )

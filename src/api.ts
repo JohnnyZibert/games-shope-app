@@ -1,5 +1,6 @@
 const base_url = `https://api.rawg.io/api/`
 export const api_key = '1fcca65ebc864371bd741c993d292941&dates'
+export const api_key2 = '1fcca65ebc864371bd741c993d292941'
 
 const getCurrenMonth = () => {
   const month = new Date().getMonth() + 1
@@ -37,3 +38,6 @@ export const gameDetailsUrl = (id: string) =>
   `${base_url}games/${id}?key=${api_key}`
 export const gameScreenshotUrl = (id: string) =>
   `${base_url}games/${id}/screenshots?key=${api_key}`
+
+export const searchGameUrl = (game_name: string) =>
+  `${base_url}games?search=${game_name}&key=${api_key2}&page_size=9`

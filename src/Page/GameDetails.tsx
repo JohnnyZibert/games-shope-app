@@ -11,7 +11,7 @@ import nintendo from '../assets/images/nintendo.svg'
 import playstation from '../assets/images/playstation.svg'
 import steam from '../assets/images/steam.svg'
 import xbox from '../assets/images/xbox.svg'
-import { IPlatform } from '../Store/getGameDetails.tsx/GameDetailsSlice'
+import { IPlatform } from '../Store/getGameDetails/GameDetailsSlice'
 import { getGamesRequest } from '../Store/getGames/GamesRequest'
 import { RootState, useAppDispatch } from '../Store/store'
 
