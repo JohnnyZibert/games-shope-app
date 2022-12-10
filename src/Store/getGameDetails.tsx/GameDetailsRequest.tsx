@@ -5,7 +5,7 @@ import { gameDetailsUrl, gameScreenshotUrl } from '../../api'
 
 export const getGameDetailsRequest = createAsyncThunk(
   'gameDetailsSlice/getGameDetailsRequest',
-  async (id: number) => {
+  async (id: string) => {
     const detailData = await axios.get(gameDetailsUrl(id))
     const screenshotsData = await axios.get(gameScreenshotUrl(id))
     return {

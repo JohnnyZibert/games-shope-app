@@ -6,7 +6,7 @@ export interface IGamesData {
 
 export interface IGame {
   name: string
-  id?: number
+  id?: string
   released: string
   background_image: string
 }

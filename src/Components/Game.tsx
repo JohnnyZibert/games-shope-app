@@ -9,21 +9,24 @@ interface IProps {
   name?: string
   released?: string
   img?: string
-  id?: number
+  id?: string
 }
 
 export const Game = ({ name, released, img, id }: IProps) => {
   const dispatch = useAppDispatch()
   const loadDetailsHandler = () => {
-    id && dispatch(getGameDetailsRequest(id))
+    if (id) {
+      dispatch(getGameDetailsRequest(id))
+      document.body.style.overflow = 'hidden'
+    }
   }
 
   return (
-    <StyledGame onClick={loadDetailsHandler}>
+    <StyledGame onClick={loadDetailsHandler} layoutId={id}>
       <Link to={`details-game/${id}`}>
-        <h3>{name}</h3>
+        <motion.h3 layoutId={`title ${id}`}>{name}</motion.h3>
         <p>{released}</p>
-        <img src={img} alt="games-img" />
+        <motion.img src={img} alt="games-img" layoutId={`image ${id}`} />
       </Link>
     </StyledGame>
   )

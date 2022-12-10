@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { LayoutGroup, motion } from 'framer-motion'
 import styled from 'styled-components'
 
 import { IGame } from '../types'
@@ -11,20 +11,22 @@ interface IProps {
 
 export const GameCardBlocks = ({ games, blockName }: IProps) => {
   return (
-    <>
+    <motion.div>
       <h2>{blockName}</h2>
       <Games>
         {games.map((game: IGame) => (
-          <Game
-            name={game.name}
-            key={game.id}
-            released={game.released}
-            img={game.background_image}
-            id={game.id}
-          />
+          <LayoutGroup>
+            <Game
+              name={game.name}
+              key={game.id}
+              released={game.released}
+              img={game.background_image}
+              id={game.id}
+            />
+          </LayoutGroup>
         ))}
       </Games>
-    </>
+    </motion.div>
   )
 }
 const Games = styled(motion.div)`

@@ -4,7 +4,7 @@ import { getGameDetailsRequest } from './GameDetailsRequest'
 
 export interface IGame {
   name: string
-  rating: string
+  rating: number
   background_image: string
   description_raw: string
   platforms: IPlatform[]
@@ -32,13 +32,13 @@ export interface IGameDetails {
 const initialState: IGameDetails = {
   game: {
     name: '',
-    rating: '',
+    rating: 0,
     background_image: '',
     description_raw: '',
     platforms: [],
   },
   screenshots: { results: [] },
-  isLoading: false,
+  isLoading: true,
 }
 
 const gameDetailsSlice = createSlice({
@@ -47,15 +47,15 @@ const gameDetailsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getGameDetailsRequest.pending, (state) => {
-      state.isLoading = false
+      state.isLoading = true
     })
     builder.addCase(getGameDetailsRequest.fulfilled, (state, { payload }) => {
       state.game = payload.game
       state.screenshots = payload.screenshots
-      state.isLoading = true
+      state.isLoading = false
     })
     builder.addCase(getGameDetailsRequest.rejected, (state) => {
-      state.isLoading = false
+      state.isLoading = true
     })
   },
 })

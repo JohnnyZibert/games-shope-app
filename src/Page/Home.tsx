@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
@@ -16,16 +16,26 @@ export const Home = () => {
   const newGame = useSelector((state: RootState) => state.games.newGames)
   const popularGame = useSelector((state: RootState) => state.games.popular)
 
+  const pathId = location.pathname.split('/')[2]
+
   useEffect(() => {
     dispatch(getGamesRequest())
   }, [dispatch])
 
   return (
     <GamesList>
-      {location.pathname[2] && <GameDetails />}
-      <GameCardBlocks games={upcomingGame} blockName={'Upcoming Game'} />
-      <GameCardBlocks games={popularGame} blockName={'Popular Games'} />
-      <GameCardBlocks games={newGame} blockName={'New Games'} />
+      <AnimateSharedLayout
+        // @ts-ignore
+        type="crossfade"
+      >
+        <AnimatePresence>
+          {pathId && <GameDetails pathId={pathId} />}
+        </AnimatePresence>
+
+        <GameCardBlocks games={upcomingGame} blockName={'Upcoming Game'} />
+        <GameCardBlocks games={popularGame} blockName={'Popular Games'} />
+        <GameCardBlocks games={newGame} blockName={'New Games'} />
+      </AnimateSharedLayout>
     </GamesList>
   )
 }
