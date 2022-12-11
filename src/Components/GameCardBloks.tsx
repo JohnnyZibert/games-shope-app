@@ -21,7 +21,7 @@ export const GameCardBlocks: FC<IProps> = ({ games, blockName }) => {
             name={game.name}
             key={game.id}
             released={game.released}
-            img={game.background_image}
+            background_image={game.background_image}
             id={game.id}
           />
         ))}

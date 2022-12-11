@@ -1,19 +1,14 @@
 import { motion } from 'framer-motion'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { cardGame } from '../animation'
 import { getGameDetailsRequest } from '../Store/getGameDetails/GameDetailsRequest'
 import { useAppDispatch } from '../Store/store'
+import { IGame } from '../types'
 
-interface IProps {
-  name?: string
-  released?: string
-  img?: string
-  id?: string
-}
-
-export const Game = ({ name, released, img, id }: IProps) => {
+export const Game: FC<IGame> = ({ name, released, background_image, id }) => {
   const dispatch = useAppDispatch()
   const loadDetailsHandler = () => {
     if (id) {
@@ -33,7 +28,11 @@ export const Game = ({ name, released, img, id }: IProps) => {
       <Link to={`details-game/${id}`}>
         <motion.h3 layoutId={`title ${id}`}>{name}</motion.h3>
         <p>{released}</p>
-        <motion.img src={img} alt="games-img" layoutId={`image ${id}`} />
+        <motion.img
+          src={background_image}
+          alt="games-img"
+          layoutId={`image ${id}`}
+        />
       </Link>
     </StyledGame>
   )

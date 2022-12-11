@@ -1,35 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+import {
+  IGameDetailContent,
+  IGameDetails,
+  IScreenshotsResults,
+} from '../../types'
 import { getGameDetailsRequest } from './GameDetailsRequest'
 
-export interface IGame {
-  name: string
-  rating: number
-  background_image: string
-  description_raw: string
-  platforms: IPlatform[]
-}
-export interface IPlatform {
-  platform: {
-    id: string
-    name: string
-  }
-}
-// export interface IScreenshotsResults {
-//
-// }
-export interface IGameDetails {
-  game: IGame
+export interface IGameDetailsState {
+  game: IGameDetailContent
   screenshots: {
-    results: {
-      id: string
-      image: string
-    }[]
+    results: IScreenshotsResults[]
   }
   isLoading: boolean
 }
 
-const initialState: IGameDetails = {
+const initialState: IGameDetailsState = {
   game: {
     name: '',
     rating: 0,
@@ -49,11 +35,14 @@ const gameDetailsSlice = createSlice({
     builder.addCase(getGameDetailsRequest.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(getGameDetailsRequest.fulfilled, (state, { payload }) => {
-      state.game = payload.game
-      state.screenshots = payload.screenshots
-      state.isLoading = false
-    })
+    builder.addCase(
+      getGameDetailsRequest.fulfilled,
+      (state, { payload }: PayloadAction<IGameDetails>) => {
+        state.game = payload.game
+        state.screenshots = payload.screenshots
+        state.isLoading = false
+      }
+    )
     builder.addCase(getGameDetailsRequest.rejected, (state) => {
       state.isLoading = true
     })

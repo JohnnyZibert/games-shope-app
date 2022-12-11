@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
@@ -11,23 +11,26 @@ import nintendo from '../assets/images/nintendo.svg'
 import playstation from '../assets/images/playstation.svg'
 import steam from '../assets/images/steam.svg'
 import xbox from '../assets/images/xbox.svg'
-import { IPlatform } from '../Store/getGameDetails/GameDetailsSlice'
+import { gameDetailsSelector } from '../Store/getGameDetails/Selectors'
 import { getGamesRequest } from '../Store/getGames/GamesRequest'
-import { RootState, useAppDispatch } from '../Store/store'
+import { useAppDispatch } from '../Store/store'
+import { IPlatform, IScreenshotsResults } from '../types'
 
 interface IProps {
   pathId: string
 }
 
-export const GameDetails = ({ pathId }: IProps) => {
+export const GameDetails: FC<IProps> = ({ pathId }) => {
   const navigate = useNavigate()
+
+  const { game, screenshots, isLoading } = useSelector(gameDetailsSelector)
+
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(getGamesRequest())
   }, [dispatch])
-  const { game, screenshots, isLoading } = useSelector(
-    (state: RootState) => state.gameDetails
-  )
+
   const exitDetailHandler = (event: MouseEvent) => {
     const element = event.target
     document.body.style.overflow = ''
@@ -50,16 +53,17 @@ export const GameDetails = ({ pathId }: IProps) => {
         return gamePade
     }
   }
-
   const getStars = () => {
     const stars = []
     const rating = Math.floor(game.rating)
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
-        stars.push(<img src={image.star_full} key={i} alt="image.star_full" />)
+        stars.push(
+          <img src={image.star_full} key={i} alt="image.star_full"></img>
+        )
       } else {
         stars.push(
-          <img src={image.star_empty} key={i} alt="image.star_empty" />
+          <img src={image.star_empty} key={i} alt="image.star_empty"></img>
         )
       }
     }
@@ -102,7 +106,7 @@ export const GameDetails = ({ pathId }: IProps) => {
           </Media>
           <Description>{game.description_raw}</Description>
           <div className="gallery">
-            {screenshots.results.map((screen: any) => (
+            {screenshots.results.map((screen: IScreenshotsResults) => (
               <img src={screen.image} alt="image" key={screen.id} />
             ))}
           </div>

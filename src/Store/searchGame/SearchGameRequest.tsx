@@ -7,6 +7,8 @@ export const searchGameRequest = createAsyncThunk(
   'searchGameSlice/searchGameRequest',
   async (textInput: string) => {
     const searchData = await axios.get(searchGameUrl(textInput))
-    return searchData.data
+    return {
+      searchGames: searchData.data.results,
+    }
   }
 )

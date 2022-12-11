@@ -6,16 +6,16 @@ import styled from 'styled-components'
 
 import { GameCardBlocks } from '../Components/GameCardBloks'
 import { getGamesRequest } from '../Store/getGames/GamesRequest'
-import { AppDispatch, RootState } from '../Store/store'
+import { gameSelector } from '../Store/getGames/Selectors'
+import { searchGameSelector } from '../Store/searchGame/Selectors'
+import { AppDispatch } from '../Store/store'
 import { GameDetails } from './GameDetails'
 
 export const Home = () => {
   const dispatch: AppDispatch = useDispatch()
   const location = useLocation()
-  const { upcoming, popular, newGames } = useSelector(
-    (state: RootState) => state.games
-  )
-  const { searchGames } = useSelector((state: RootState) => state.searchGame)
+  const { upcoming, popular, newGames } = useSelector(gameSelector)
+  const { searchGames } = useSelector(searchGameSelector)
 
   const pathId = location.pathname.split('/')[2]
 

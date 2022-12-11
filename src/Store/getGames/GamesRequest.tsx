@@ -10,9 +10,9 @@ export const getGamesRequest = createAsyncThunk(
     const newGamesData = await axios.get(newGamesUrl())
     const upcomingGameData = await axios.get(upcomingGamesUrl())
     return {
-      popular: popularGameData.data,
-      newGames: newGamesData.data,
-      upcoming: upcomingGameData.data,
+      popular: popularGameData.data.results,
+      newGames: newGamesData.data.results,
+      upcoming: upcomingGameData.data.results,
     }
   }
 )

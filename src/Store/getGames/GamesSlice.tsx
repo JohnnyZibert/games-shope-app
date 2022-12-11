@@ -1,12 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { IGamesData } from '../../types'
+import { IFetchGameData, IGamesData } from '../../types'
 import { getGamesRequest } from './GamesRequest'
 
 const initialState: IGamesData = {
-  popular: [],
-  newGames: [],
-  upcoming: [],
+  results: {
+    popular: [],
+    newGames: [],
+    upcoming: [],
+  },
   isLoad: true,
 }
 
@@ -18,12 +20,15 @@ const gamesSlice = createSlice({
     builder.addCase(getGamesRequest.pending, (state) => {
       state.isLoad = true
     })
-    builder.addCase(getGamesRequest.fulfilled, (state, { payload }) => {
-      state.popular = payload.popular.results
-      state.newGames = payload.newGames.results
-      state.upcoming = payload.upcoming.results
-      state.isLoad = false
-    })
+    builder.addCase(
+      getGamesRequest.fulfilled,
+      (state, { payload }: PayloadAction<IFetchGameData>) => {
+        state.results.popular = payload.popular
+        state.results.newGames = payload.newGames
+        state.results.upcoming = payload.upcoming
+        state.isLoad = false
+      }
+    )
     builder.addCase(getGamesRequest.rejected, (state) => {
       state.isLoad = true
     })
